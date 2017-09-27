@@ -4,9 +4,7 @@ This project implements different call graph construction algorithms described i
 Algorithms](http://web.cs.ucla.edu/~palsberg/paper/oopsla00.pdf)
 
 
-#RTA
-
-## Run
+# RTA
 
 To run the analysis
 
