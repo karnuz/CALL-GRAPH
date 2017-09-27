@@ -1,0 +1,54 @@
+.symbol_type Node
+
+.decl Reachable(m:Node, n:Node)
+.output Reachable(IO=stdout)
+.output Reachable
+
+Reachable("Main","C1").
+Reachable(n,k) :- Reachable(m,b), MethodCalls(m,b,n, c), inclusiveSubtype(c,x),staticLookup(x,n,k,n), InstantiatedClass(x).
+
+.decl InstantiatedClass(a:Node)
+.input InstantiatedClass
+
+
+
+//staticLookup for (c,m)
+.decl staticLookup(a:Node,b:Node,c:Node,d:Node)
+staticLookup(c,m,c,m) :- Methods (c,m).
+//This also takes care of the case in which 'c' does not have any sub-class.
+staticLookup(c,m,k,m):- ImmediateSubclass(k,c), Methods(k,m), !Methods(c,m).   
+ // This is to deal with immediate subclass case
+staticLookup(c, m, k, m) :- Subclass(k,c),  Methods(k,m), !Methods (c,m), IntermediateClass(x,c,k), !Methods(x,m).  
+// This does not deal with the immediate subclass case because IntermediateClass evaluates to null
+.output staticLookup
+
+
+.decl Classes(c:Node)
+.input Classes
+
+.decl inclusiveSubtype(a:Node,b:Node)
+inclusiveSubtype(c,x):- Subclass(c,x).
+inclusiveSubtype(c,c):- Classes(c).
+inclusiveSubtype(c,c):-Subclass(_,c).
+//.output inclusiveSubtype
+
+
+
+//Calculating Intermediate Subclasses of 'c' and 'k' where 'k' is higher in the heirarchy. This is needed in StaticLookup
+.decl IntermediateClass(a:Node,b:Node,c:Node)
+IntermediateClass(x,c,k) :- Subclass(k,x), Subclass(x,c). 
+
+//Subclass Calculation
+.decl ImmediateSubclass(a:Node,b:Node)
+.input ImmediateSubclass
+
+.decl Subclass(a:Node,b:Node)
+Subclass(x,y) :- ImmediateSubclass(x,y).
+Subclass(x,y) :- Subclass(x,z), ImmediateSubclass(z,y).
+//.output Subclass
+
+.decl MethodCalls(a:Node, b: Node, c: Node, d:Node)
+.input MethodCalls
+
+.decl Methods(a:Node, b:Node)
+.input Methods

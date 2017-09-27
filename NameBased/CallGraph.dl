@@ -1,0 +1,16 @@
+.symbol_type Node
+
+.decl Reachable(m:Node, n:Node)
+.output Reachable(IO=stdout)
+.output Reachable
+
+// The reachable methods against the class in which they are defined. If C1 defines M and C11 is subclass of C1, where C11 does not redefine M, then C11 M is same as C1 M. It will not be displayed in the result. However if C111 redefines M, then C111 M will be included in the list.
+
+Reachable("Main","C1").
+Reachable(n,c) :- Reachable(m,b), MethodCalls(m,b,n, _ ), Methods(c,n).
+
+.decl MethodCalls(a:Node, b: Node, c: Node, d:Node)
+.input MethodCalls
+
+.decl Methods(a:Node, b:Node)
+.input Methods

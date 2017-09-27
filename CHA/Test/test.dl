@@ -1,0 +1,8 @@
+.symbol_type Node
+
+.decl New(a:Node, b:Node, c:Node)
+.input New
+
+.decl Value(a:Node,b:Node)
+Value(x,y):- New(x,"b",y), x!=y.
+.output Value(IO=stdout)

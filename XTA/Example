@@ -1,0 +1,20 @@
+
+
+Example:
+
+Main instantiates C1 and C2
+Main calls A,C1
+A C1 instantiates C2
+A C1 calls F C2
+F C2 instantiates C8
+F C2 instantiates C321
+Field C8 x has declared type C3
+F C2 writes in field C8 x
+F C2 returns with type C8
+A C1 reads C8,x
+A C1 calls M,C321. staticLookup transfers it to M,C32
+E has parameter type C7, C8 (C7  declared in A, C8 came as return type from F)
+E calls A C7
+E calls B C8
+
+The above is also reflected in our output from algorithm.
